@@ -2,7 +2,7 @@
  * Basic [Android] Example for react-native-blur
  * https://github.com/react-native-community/react-native-blur
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Dimensions,
   Image,
@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
-import { BlurView } from '@react-native-community/blur';
+import {BlurView} from '@react-native-community/blur';
 
 const BLUR_TYPES = ['xlight', 'light', 'dark'];
 
@@ -34,7 +34,7 @@ export default class Basic extends Component {
     // Workaround for a tricky race condition on initial load.
     InteractionManager.runAfterInteractions(() => {
       setTimeout(() => {
-        this.setState({ viewRef: findNodeHandle(this.refs.backgroundImage) });
+        this.setState({viewRef: findNodeHandle(this.refs.backgroundImage)});
       }, 500);
     });
   }
@@ -48,25 +48,28 @@ export default class Basic extends Component {
 
   renderBlurView() {
     const tintColor = ['#ffffff', '#000000'];
-    if (this.state.blurType === 'xlight') {tintColor.reverse();}
+    if (this.state.blurType === 'xlight') {
+      tintColor.reverse();
+    }
 
     return (
       <View style={styles.container}>
-        {this.state.viewRef && <BlurView
-          viewRef={this.state.viewRef}
-          style={styles.blurView}
+        {this.state.viewRef && (
+          <BlurView
+            viewRef={this.state.viewRef}
+            style={styles.blurView}
+            blurRadius={9}
+            blurType={this.state.blurType}
 
-          blurRadius={9}
-          blurType={this.state.blurType}
+            // The following props are also available on Android:
 
-          // The following props are also available on Android:
+            // blurRadius={20}
+            // downsampleFactor={10}
+            // overlayColor={'rgba(0, 0, 255, .6)'}   // set a blue overlay
+          />
+        )}
 
-          // blurRadius={20}
-          // downsampleFactor={10}
-          // overlayColor={'rgba(0, 0, 255, .6)'}   // set a blue overlay
-        />}
-
-        <Text style={[styles.text, { color: tintColor[0] }]}>
+        <Text style={[styles.text, {color: tintColor[0]}]}>
           Blur component (Android)
         </Text>
 
@@ -81,8 +84,8 @@ export default class Basic extends Component {
           values={BLUR_TYPES}
           orientation="horizontal"
           selectedIndex={this.state.activeSegment}
-          onTabPress={this._onChange.bind(this)} />
-
+          onTabPress={this._onChange.bind(this)}
+        />
       </View>
     );
   }
@@ -94,15 +97,16 @@ export default class Basic extends Component {
           source={require('./bgimage.jpeg')}
           style={styles.image}
           ref={'backgroundImage'}
-          onLoadEnd={this.imageLoaded.bind(this)} />
+          onLoadEnd={this.imageLoaded.bind(this)}
+        />
 
-        { this.state.showBlur ? this.renderBlurView() : null }
+        {this.state.showBlur ? this.renderBlurView() : null}
 
-        <View
-          style={styles.blurToggle}>
+        <View style={styles.blurToggle}>
           <Switch
-            onValueChange={(value) => this.setState({showBlur: value})}
-            value={this.state.showBlur} />
+            onValueChange={value => this.setState({showBlur: value})}
+            value={this.state.showBlur}
+          />
         </View>
       </View>
     );

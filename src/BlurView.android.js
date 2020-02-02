@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
   View,
@@ -34,12 +34,12 @@ class BlurView extends Component {
   }
 
   blurRadius() {
-    const { blurRadius, blurAmount } = this.props;
+    const {blurRadius, blurAmount} = this.props;
 
     if (blurRadius != null) {
       if (blurRadius > 25) {
         throw new Error(
-          `[ReactNativeBlur]: blurRadius cannot be greater than 25! (was: ${blurRadius})`
+          `[ReactNativeBlur]: blurRadius cannot be greater than 25! (was: ${blurRadius})`,
         );
       }
       return blurRadius;
@@ -56,7 +56,7 @@ class BlurView extends Component {
   }
 
   downsampleFactor() {
-    const { downsampleFactor, blurRadius } = this.props;
+    const {downsampleFactor, blurRadius} = this.props;
     if (downsampleFactor != null) {
       return downsampleFactor;
     }
@@ -67,12 +67,12 @@ class BlurView extends Component {
     if (this.props.children != null) {
       throw new Error(
         '[ReactNativeBlur]: BlurView cannot contain any child views on Android. ' +
-        'You should use "position: absolute" on the BlurView, ' +
-        'and place other views in front of it.'
+          'You should use "position: absolute" on the BlurView, ' +
+          'and place other views in front of it.',
       );
     }
 
-    const { viewRef, style } = this.props;
+    const {viewRef, style} = this.props;
 
     return (
       <NativeBlurView
@@ -80,14 +80,17 @@ class BlurView extends Component {
         blurRadius={this.blurRadius()}
         downsampleFactor={this.downsampleFactor()}
         overlayColor={this.overlayColor()}
-        style={StyleSheet.compose(styles.transparent, style)}
+        style={StyleSheet.compose(
+          styles.transparent,
+          style,
+        )}
       />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  transparent: { backgroundColor: 'transparent' },
+  transparent: {backgroundColor: 'transparent'},
 });
 
 BlurView.propTypes = {
